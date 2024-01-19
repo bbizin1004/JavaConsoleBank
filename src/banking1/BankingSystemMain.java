@@ -25,8 +25,10 @@ public class BankingSystemMain {
 				account.makeAccount();
 				break;
 			case 2:
+				account.depositMoney();
 				break;
 			case 3:
+				account.withdrawMoney();
 				break;
 			case 4:
 				account.showAccinfo();

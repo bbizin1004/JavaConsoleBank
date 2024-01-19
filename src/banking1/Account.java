@@ -53,26 +53,45 @@ class AccountManager {
 	public void depositMoney() {
 		System.out.println("***입 금***");
 		System.out.println("계좌번호와 입금할 금액을 입력하세요");
-		
-		boolean isFind = false;
 		Scanner scan = new Scanner(System.in);
+
+		boolean isFind = false;
 		System.out.print("계좌번호: ");
 		String searchNum = scan.nextLine();
-		
+
 		for (int i = 0; i < index; i++) {
-			if(searchNum.compareTo(accounts[i].accountNum)==0) {
+			if (searchNum.compareTo(accounts[i].accountNum) == 0) {
 				System.out.print("입금액: ");
 				int addMoney = scan.nextInt();
 				accounts[i].balance += addMoney;
 				isFind = true;
+				System.out.println("입금이 완료되었습니다.");
 			}
 		}
-		if(isFind==false)
-			System.out.println("해당계좌가 없습니다.");
+		if (isFind == false)
+			System.out.println("해당계좌가 존재하지 않습니다.");
 	}
 
 	public void withdrawMoney() {
+		System.out.println("***출 금***");
+		System.out.println("계좌번호와 출금할 금액을 입력하세요");
+		Scanner scan = new Scanner(System.in);
 
+		boolean isFind = false;
+		System.out.print("계좌번호: ");
+		String searchNum = scan.nextLine();
+
+		for (int i = 0; i < index; i++) {
+			if (searchNum.compareTo(accounts[i].accountNum) == 0) {
+				System.out.print("출금액: ");
+				int minusMoney = scan.nextInt();
+				accounts[i].balance -= minusMoney;
+				isFind = true;
+				System.out.println("출금이 완료되었습니다.");
+			}
+		}
+		if (isFind == false)
+			System.out.println("해당계좌가 존재하지 않습니다.");
 	}
 
 	public void showAccinfo() {
