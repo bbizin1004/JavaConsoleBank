@@ -1,6 +1,8 @@
-package banking1;
+package banking2;
 
 import java.util.Scanner;
+
+
 
 public class BankingSystemMain implements ICustomDefine {
 
@@ -22,7 +24,7 @@ public class BankingSystemMain implements ICustomDefine {
 			int menu = scan.nextInt();
 			switch (menu) {
 			case MAKE:
-				account.makeAccount();
+				account.makeAccount(menu);
 				break;
 			case DEPOSIT:
 				account.depositMoney();

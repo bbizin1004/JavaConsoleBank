@@ -1,29 +1,9 @@
-package banking1;
+package banking2;
 
 import java.util.Scanner;
 
-public class Account {
+public class AccountManager {
 
-	String accountNum;
-	String name;
-	int balance;
-
-	public Account(String accountNum, String name, int balance) {
-		this.accountNum = accountNum;
-		this.name = name;
-		this.balance = balance;
-	}
-
-	public void showAccinfo() {
-		System.out.println("계좌번호:" + accountNum);
-		System.out.println("고객이름:" + name);
-		System.out.println("잔고:" + balance);
-	}
-
-}
-
-class AccountManager {
-	
 	private Account[] accounts;
 	private int index;
 
@@ -32,10 +12,13 @@ class AccountManager {
 		index = 0;
 	}
 
-	public void makeAccount() {
+	public void makeAccount(int menu) {
 		Scanner scan = new Scanner(System.in);
 
 		System.out.println("***신규계좌개설***");
+		System.out.println("-----계좌선택-----");
+		System.out.println("1.보통계좌");
+		System.out.println("2.신용신뢰계좌");
 
 		System.out.print("계좌번호: ");
 		String accountNum = scan.nextLine();
@@ -46,8 +29,22 @@ class AccountManager {
 		System.out.print("잔고: ");
 		int balance = scan.nextInt();
 
-		accounts[index] = new Account(accountNum, name, balance);
-		index++;
+		if (menu == 1) {
+			System.out.print("기본이자%(정수형태로 입력):");
+			int interest = scan.nextInt();
+			NormalAccount normal = new NormalAccount(accountNum, name, balance, interest);
+			accounts[index++] = normal;
+		} else if (menu == 2) {
+			System.out.print("기본이자%(정수형태로 입력):");
+			int interest = scan.nextInt();
+			System.out.print("신용등급(A,B,C등급:");
+			String grade = scan.next();
+			HighCreditAccount high = 
+					new HighCreditAccount(accountNum, name, balance, interest, grade);
+			accounts[index++] = high;
+		}
+
+		System.out.println("계좌개설이 완료되었습니다.");
 	}
 
 	public void depositMoney() {
@@ -102,6 +99,3 @@ class AccountManager {
 		System.out.println("전체계좌정보 출력이 완료되었습니다.");
 	}
 }
-
-
-
