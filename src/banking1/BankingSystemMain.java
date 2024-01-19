@@ -14,31 +14,28 @@ public class BankingSystemMain {
 	}
 
 	public static void main(String[] args) {
-
-		boolean exit = false;
-
-		do {
-			Scanner scan = new Scanner(System.in);
+		Scanner scan = new Scanner(System.in);
+		AccountManager account = new AccountManager(50);
+		
+		while (true) {
 			showMenu();
 			int menu = scan.nextInt();
-
 			switch (menu) {
 			case 1:
-//				makeAccount();
+				account.makeAccount();
 				break;
 			case 2:
 				break;
 			case 3:
 				break;
 			case 4:
-//				showAccinfo();
+				account.showAccinfo();
 				break;
 			case 5:
-				exit = true;
-				break;
+				System.out.println("프로그램종료");
+				return;
 			}
 
-		} while (!exit);
-
+		}
 	}
 }
