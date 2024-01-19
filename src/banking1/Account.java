@@ -64,9 +64,11 @@ class AccountManager {
 				System.out.print("입금액: ");
 				int addMoney = scan.nextInt();
 				accounts[i].balance += addMoney;
+				isFind = true;
 			}
 		}
-
+		if(isFind==false)
+			System.out.println("해당계좌가 없습니다.");
 	}
 
 	public void withdrawMoney() {
