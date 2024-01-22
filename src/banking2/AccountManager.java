@@ -60,7 +60,7 @@ public class AccountManager {
 			if (searchNum.compareTo(accounts[i].accountNum) == 0) {
 				System.out.print("입금액: ");
 				int addMoney = scan.nextInt();
-				accounts[i].balance += addMoney;
+				accounts[i].deposit(addMoney);
 				isFind = true;
 				System.out.println("입금이 완료되었습니다.");
 			}

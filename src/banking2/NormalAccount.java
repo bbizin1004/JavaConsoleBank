@@ -8,6 +8,11 @@ public class NormalAccount extends Account {
 		this.interest = interest;
 
 	}
+	@Override
+	public void deposit(int addMoney) {
+		balance += (balance * interest/100)+addMoney;
+	}
+	
 
 	@Override
 	public void showAccinfo() {

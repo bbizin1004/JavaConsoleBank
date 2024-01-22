@@ -13,6 +13,11 @@ public class Account {
 		this.name = name;
 		this.balance = balance;
 	}
+	
+	public void deposit(int addMoney) {
+		balance += addMoney;
+	} 
+	
 
 	public void showAccinfo() {
 		System.out.println("계좌번호:" + accountNum);
