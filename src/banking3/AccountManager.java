@@ -1,5 +1,6 @@
 package banking3;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AccountManager {
@@ -19,9 +20,9 @@ public class AccountManager {
 		System.out.println("-----계좌선택-----");
 		System.out.println("1.보통계좌");
 		System.out.println("2.신용신뢰계좌");
-		
+
 		int choice = scan.nextInt();
-		scan.nextLine(); //  선생님께 물어보기.
+		scan.nextLine(); // 이걸 안쓰고 제대로 칸이 떨어지게 나오게 할수 있는지??
 		System.out.print("계좌번호: ");
 		String accountNum = scan.nextLine();
 
@@ -42,8 +43,7 @@ public class AccountManager {
 			int interest = scan.nextInt();
 			System.out.print("신용등급(A,B,C등급:");
 			String grade = scan.next();
-			HighCreditAccount high = 
-					new HighCreditAccount(accountNum, name, balance, interest, grade);
+			HighCreditAccount high = new HighCreditAccount(accountNum, name, balance, interest, grade);
 			accounts[index++] = high;
 		}
 
@@ -62,10 +62,25 @@ public class AccountManager {
 		for (int i = 0; i < index; i++) {
 			if (searchNum.compareTo(accounts[i].accountNum) == 0) {
 				System.out.print("입금액: ");
-				int addMoney = scan.nextInt();
-				accounts[i].deposit(addMoney);
-				isFind = true;
-				System.out.println("입금이 완료되었습니다.");
+
+				try {
+					int addMoney = scan.nextInt();
+					if (addMoney > 0) {
+						if (addMoney % 500 == 0) {
+							accounts[i].deposit(addMoney);
+							isFind = true;
+							System.out.println("입금이 완료되었습니다.");
+
+						} else {
+							System.out.println("500원 단위로 입금하실수 있습니다.");
+						}
+					} else {
+						System.out.println("음수를 입력할 수 없습니다.");
+					}
+
+				} catch (InputMismatchException e) {
+					System.out.println("문자를 입력할 수 없습니다.");
+				}
 			}
 		}
 		if (isFind == false)
