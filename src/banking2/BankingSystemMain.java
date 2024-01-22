@@ -24,7 +24,7 @@ public class BankingSystemMain implements ICustomDefine {
 			int menu = scan.nextInt();
 			switch (menu) {
 			case MAKE:
-				account.makeAccount(menu);
+				account.makeAccount();
 				break;
 			case DEPOSIT:
 				account.depositMoney();
