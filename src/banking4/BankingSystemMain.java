@@ -1,4 +1,4 @@
-package banking3;
+package banking4;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -48,7 +48,7 @@ public class BankingSystemMain implements ICustomDefine {
 	public static int readMenu() {
 		Scanner sc = new Scanner(System.in);
 
-		int inputMenu = 0;// 이걸 안하면 에러가 나는 이유?
+		int inputMenu = 0;// 이걸 꼭 넣어야 하는지??
 
 		try {
 			inputMenu = sc.nextInt();
