@@ -18,7 +18,7 @@ public class BankingSystemMain implements ICustomDefine {
 
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
-		AccountManager account = new AccountManager(50);
+		AccountManager account = new AccountManager();
 
 		while (true) {
 			showMenu();

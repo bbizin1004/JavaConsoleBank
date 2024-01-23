@@ -1,16 +1,18 @@
 package banking4;
 
+import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AccountManager {
 
-	private Account[] accounts;
-	private int index;
+	private Account[] accounts;// 해쉬쳇으로 만들면 이것도 필요 없어지는지?
+	private int index;// 해쉬셋 으로 만들면 이것도 필요 없어 지는지?
 
-	public AccountManager(int num) {
-		accounts = new Account[num];
-		index = 0;
+	
+	
+	public AccountManager() {
+		HashSet<Account> set = new HashSet<Account>(); // 이렇게 하는게 맞는지?? 해쉬셋으로 바꿀때 불필요한 선언은 없는지??
 	}
 
 	public void makeAccount() {
@@ -22,7 +24,7 @@ public class AccountManager {
 		System.out.println("2.신용신뢰계좌");
 
 		int choice = scan.nextInt();
-		scan.nextLine(); // 이걸 안쓰고 제대로 칸이 떨어지게 나오게 할수 있는지??
+		scan.nextLine(); 
 		System.out.print("계좌번호: ");
 		String accountNum = scan.nextLine();
 
