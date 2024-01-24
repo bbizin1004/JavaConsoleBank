@@ -4,10 +4,21 @@ import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import banking3.Account;
+
 public class AccountManager {
 
 	private Account[] accounts;// 해쉬쳇으로 만들면 이것도 필요 없어지는지?
 	private int index;// 해쉬셋 으로 만들면 이것도 필요 없어 지는지?
+	
+
+	
+	/* 이게 컬렉션으로 하면 필요 없어 지는건지?*/
+//	public AccountManager(int num) {
+//		accounts = new Account[num];
+//		index = 0;
+//	}
+	
 
 	public AccountManager() {
 		HashSet<Account> set = new HashSet<Account>(); // 이렇게 하는게 맞는지?? 해쉬셋으로 바꿀때 불필요한 선언은 없는지??
