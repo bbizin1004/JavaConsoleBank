@@ -5,8 +5,9 @@ import java.util.Scanner;
 
 public class BankingSystemMain implements ICustomDefine {
 
+	static Scanner scan = new Scanner(System.in);
+	
 	public static void main(String[] args) {
-		Scanner scan = new Scanner(System.in);
 		AccountManager account = new AccountManager();
 
 		while (true) {
@@ -25,6 +26,9 @@ public class BankingSystemMain implements ICustomDefine {
 			case INQUIRE:
 				account.showAccinfo();
 				break;
+			case DELETE:
+				account.deleteAccount();
+				break;
 			case EXIT:
 				System.out.println("프로그램종료");
 				return;
@@ -35,12 +39,11 @@ public class BankingSystemMain implements ICustomDefine {
 	}
 
 	public static int readMenu() {
-		Scanner sc = new Scanner(System.in);
 
 		int inputMenu = 0;// 이걸 꼭 넣어야 하는지??
 
 		try {
-			inputMenu = sc.nextInt();
+			inputMenu = scan.nextInt();
 			if (!(inputMenu > 0 && inputMenu < 6)) {
 				MenuErrorException ex = new MenuErrorException();
 				throw ex;

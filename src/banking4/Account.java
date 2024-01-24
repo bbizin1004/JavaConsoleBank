@@ -13,9 +13,8 @@ abstract public class Account {
 		this.name = name;
 		this.balance = balance;
 	}
-	
-	abstract void deposit(int addMoney); 
-	
+
+	abstract void deposit(int addMoney);
 
 	public void showAccinfo() {
 		System.out.println("계좌번호:" + accountNum);
@@ -23,9 +22,19 @@ abstract public class Account {
 		System.out.println("잔고:" + balance);
 	}
 
+	@Override
+	public int hashCode() {
+		return accountNum.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		Account aObj = (Account) obj;
+		if (aObj.accountNum.equals(accountNum)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }
-
-
-
-
-

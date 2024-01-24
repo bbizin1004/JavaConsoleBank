@@ -26,44 +26,64 @@ public class AccountManager {
 
 	// 계좌 개설
 	public void makeAccount() {
-		Scanner scan = new Scanner(System.in);
+//		Scanner scan = new Scanner(System.in);
 
 		System.out.println("***신규계좌개설***");
 		System.out.println("-----계좌선택-----");
 		System.out.println("1.보통계좌");
 		System.out.println("2.신용신뢰계좌");
 
-		int choice = scan.nextInt();
-		scan.nextLine(); // 버퍼 날림
+		int choice = BankingSystemMain.scan.nextInt();
+		BankingSystemMain.scan.nextLine(); // 버퍼 날림
 
 		System.out.print("계좌번호: ");
-		String accountNum = scan.nextLine();
+		String accountNum = BankingSystemMain.scan.nextLine();
 
 		System.out.print("이름: ");
-		String name = scan.nextLine();
+		String name = BankingSystemMain.scan.nextLine();
 
 		System.out.print("잔고: ");
-		int balance = scan.nextInt();
+		int balance = BankingSystemMain.scan.nextInt();
 
 		if (choice == 1) {
 			System.out.print("기본이자%(정수형태로 입력):");
-			int interest = scan.nextInt();
+			int interest = BankingSystemMain.scan.nextInt();
+			BankingSystemMain.scan.nextLine(); // 버퍼 날림
 			NormalAccount normal = new NormalAccount(accountNum, name, balance, interest);
-			if(accounts.contains(accountNum)) {
-				
-			}else {
+			if (accounts.add(normal) == false) {
+				System.out.println("중복계좌 발견됨. 덮어쓸까요? (y or n)");
+				String dup = BankingSystemMain.scan.nextLine();
+				if (dup.equals("y")) {
+					accounts.remove(normal);
+					accounts.add(normal);
+				} else if (dup.equals("n")) {
+					return;
+				}
+			} else if (accounts.add(normal) == true) {
 				accounts.add(normal);
 			}
 
 		} else if (choice == 2) {
 			System.out.print("기본이자%(정수형태로 입력):");
-			int interest = scan.nextInt();
+			int interest = BankingSystemMain.scan.nextInt();
 			System.out.print("신용등급(A,B,C등급:");
-			String grade = scan.next();
+			String grade = BankingSystemMain.scan.next();
 			HighCreditAccount high = new HighCreditAccount(accountNum, name, balance, interest, grade);
-			accounts.add(high);
-		}
 
+			if (accounts.add(high) == false) {
+				System.out.println("중복계좌 발견됨. 덮어쓸까요? (y or n)");
+				String dup = BankingSystemMain.scan.nextLine();
+				if (dup.equals("y")) {
+					accounts.remove(high);
+					accounts.add(high);
+				} else if (dup.equals("n")) {
+					return;
+				}
+			} else if (accounts.add(high) == true) {
+				accounts.add(high);
+			}
+
+		}
 		System.out.println("계좌개설이 완료되었습니다.");
 	}
 
@@ -71,19 +91,18 @@ public class AccountManager {
 	public void depositMoney() {
 		System.out.println("***입 금***");
 		System.out.println("계좌번호와 입금할 금액을 입력하세요");
-		Scanner scan = new Scanner(System.in);
 
 		boolean isFind = false;
 		System.out.print("계좌번호: ");
-		String searchNum = scan.nextLine();
-		
-		//확장 for문으로 변경( hashset은 인덱스가 없기때문에)// 일반for문으로는 안되는지??
+		String searchNum = BankingSystemMain.scan.nextLine();
+
+		// 확장 for문으로 변경( hashset은 인덱스가 없기때문에)// 일반for문으로는 안되는지??
 		for (Account ac : accounts) {
 			if (searchNum.compareTo(ac.accountNum) == 0) {
 				System.out.print("입금액: ");
 
 				try {
-					int addMoney = scan.nextInt();
+					int addMoney = BankingSystemMain.scan.nextInt();
 					if (addMoney > 0) {
 						if (addMoney % 500 == 0) {
 							ac.deposit(addMoney);
@@ -113,18 +132,17 @@ public class AccountManager {
 	public void withdrawMoney() {
 		System.out.println("***출 금***");
 		System.out.println("계좌번호와 출금할 금액을 입력하세요");
-		Scanner scan = new Scanner(System.in);
 
 		boolean isFind = false;
 		System.out.print("계좌번호: ");
-		String searchNum = scan.nextLine();
+		String searchNum = BankingSystemMain.scan.nextLine();
 
 		for (Account ac : accounts) {
 			if (searchNum.compareTo(ac.accountNum) == 0) {
 				System.out.print("출금액: ");
 
 				try {
-					int minusMoney = scan.nextInt();
+					int minusMoney = BankingSystemMain.scan.nextInt();
 					if (minusMoney > 0) {
 						if (ac.balance > minusMoney) {
 							if (minusMoney % 1000 == 0) {
@@ -138,8 +156,8 @@ public class AccountManager {
 						} else {
 							System.out.println("잔고가 부족합니다. 금액 전체를 출금할까요?");
 							System.out.println("y:금액전체 출금처리 or n:출금요청취소 ");
-							scan.nextLine();
-							String allMoney = scan.nextLine();
+							BankingSystemMain.scan.nextLine();
+							String allMoney = BankingSystemMain.scan.nextLine();
 
 							if (allMoney.equals("y")) {
 								ac.balance -= ac.balance;
@@ -163,7 +181,8 @@ public class AccountManager {
 		if (isFind == false)
 			System.out.println("해당계좌가 존재하지 않습니다.");
 	}
-	//계좌 정보 출력
+
+	// 계좌 정보 출력
 	public void showAccinfo() {
 		System.out.println("***계좌정보출력***");
 		for (Account ac : accounts) {
@@ -171,16 +190,28 @@ public class AccountManager {
 		}
 		System.out.println("전체계좌정보 출력이 완료되었습니다.");
 	}
-	
+
+	// 계좌 삭제
 	public void deleteAccount() {
-		
+		BankingSystemMain.scan.nextLine(); // 버퍼 날림
+		System.out.println("삭제할 계좌를 입력하세요");
+
+		boolean isFind = false;
+
+		System.out.println("계좌번호:");
+		String delete = BankingSystemMain.scan.nextLine();
+
+		for (Account ac : accounts) {
+			if (delete.equals(ac.accountNum)) {
+				accounts.remove(ac);
+				isFind = true;
+				break;
+			}
+		}
+		if (isFind == false)
+			System.out.println("해당계좌가 존재하지 않습니다.");
+		else
+			System.out.println("데이터가 삭제되었습니다.");
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
