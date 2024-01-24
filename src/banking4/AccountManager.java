@@ -1,5 +1,6 @@
 package banking4;
 
+import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -8,9 +9,21 @@ public class AccountManager {
 	private Account[] accounts;
 	private int index;
 
-	public AccountManager(int num) {
-		accounts = new Account[num];
-		index = 0;
+	public AccountManager() {
+	
+	}
+	
+	HashSet<Account> set = new HashSet<Account>();
+	
+	
+	public void showMenu() {
+		System.out.println("-----Menu-----");
+		System.out.println("1.계좌계설");
+		System.out.println("2.입금");
+		System.out.println("3.출금");
+		System.out.println("4.계좌정보출력");
+		System.out.println("5.프로그램종료");
+		System.out.print("선택:");
 	}
 
 	public void makeAccount() {
@@ -22,7 +35,7 @@ public class AccountManager {
 		System.out.println("2.신용신뢰계좌");
 
 		int choice = scan.nextInt();
-		scan.nextLine(); // 이걸 안쓰고 제대로 칸이 떨어지게 나오게 할수 있는지??
+		scan.nextLine(); // 버퍼 날림
 		System.out.print("계좌번호: ");
 		String accountNum = scan.nextLine();
 
