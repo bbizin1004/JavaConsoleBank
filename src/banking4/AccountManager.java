@@ -4,36 +4,27 @@ import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import banking3.Account;
-
 public class AccountManager {
 
-	private Account[] accounts;// 해쉬쳇으로 만들면 이것도 필요 없어지는지?
-	private int index;// 해쉬셋 으로 만들면 이것도 필요 없어 지는지?
-	
-
-	
-	/* 이게 컬렉션으로 하면 필요 없어 지는건지?*/
-//	public AccountManager(int num) {
-//		accounts = new Account[num];
-//		index = 0;
-//	}
-	
+	HashSet<Account> accounts;// 필드에 선언해야 다른 메소드에서 쓸수 있음
 
 	public AccountManager() {
-		HashSet<Account> set = new HashSet<Account>(); // 이렇게 하는게 맞는지?? 해쉬셋으로 바꿀때 불필요한 선언은 없는지??
+		accounts = new HashSet<Account>();
 	}
 
+	// 메뉴 출력
 	public void showMenu() {
 		System.out.println("-----Menu-----");
 		System.out.println("1.계좌계설");
 		System.out.println("2.입금");
 		System.out.println("3.출금");
 		System.out.println("4.계좌정보출력");
-		System.out.println("5.프로그램종료");
+		System.out.println("5.계좌정보삭제");
+		System.out.println("6.프로그램종료");
 		System.out.print("선택:");
 	}
 
+	// 계좌 개설
 	public void makeAccount() {
 		Scanner scan = new Scanner(System.in);
 
@@ -43,10 +34,8 @@ public class AccountManager {
 		System.out.println("2.신용신뢰계좌");
 
 		int choice = scan.nextInt();
-
 		scan.nextLine(); // 버퍼 날림
 
-		scan.nextLine();
 		System.out.print("계좌번호: ");
 		String accountNum = scan.nextLine();
 
@@ -60,7 +49,11 @@ public class AccountManager {
 			System.out.print("기본이자%(정수형태로 입력):");
 			int interest = scan.nextInt();
 			NormalAccount normal = new NormalAccount(accountNum, name, balance, interest);
-			accounts[index++] = normal;
+			if(accounts.contains(accountNum)) {
+				
+			}else {
+				accounts.add(normal);
+			}
 
 		} else if (choice == 2) {
 			System.out.print("기본이자%(정수형태로 입력):");
@@ -68,12 +61,13 @@ public class AccountManager {
 			System.out.print("신용등급(A,B,C등급:");
 			String grade = scan.next();
 			HighCreditAccount high = new HighCreditAccount(accountNum, name, balance, interest, grade);
-			accounts[index++] = high;
+			accounts.add(high);
 		}
 
 		System.out.println("계좌개설이 완료되었습니다.");
 	}
 
+	// 입금
 	public void depositMoney() {
 		System.out.println("***입 금***");
 		System.out.println("계좌번호와 입금할 금액을 입력하세요");
@@ -82,16 +76,17 @@ public class AccountManager {
 		boolean isFind = false;
 		System.out.print("계좌번호: ");
 		String searchNum = scan.nextLine();
-
-		for (int i = 0; i < index; i++) {
-			if (searchNum.compareTo(accounts[i].accountNum) == 0) {
+		
+		//확장 for문으로 변경( hashset은 인덱스가 없기때문에)// 일반for문으로는 안되는지??
+		for (Account ac : accounts) {
+			if (searchNum.compareTo(ac.accountNum) == 0) {
 				System.out.print("입금액: ");
 
 				try {
 					int addMoney = scan.nextInt();
 					if (addMoney > 0) {
 						if (addMoney % 500 == 0) {
-							accounts[i].deposit(addMoney);
+							ac.deposit(addMoney);
 							isFind = true;
 							System.out.println("입금이 완료되었습니다.");
 
@@ -124,16 +119,16 @@ public class AccountManager {
 		System.out.print("계좌번호: ");
 		String searchNum = scan.nextLine();
 
-		for (int i = 0; i < index; i++) {
-			if (searchNum.compareTo(accounts[i].accountNum) == 0) {
+		for (Account ac : accounts) {
+			if (searchNum.compareTo(ac.accountNum) == 0) {
 				System.out.print("출금액: ");
 
 				try {
 					int minusMoney = scan.nextInt();
 					if (minusMoney > 0) {
-						if (accounts[i].balance > minusMoney) {
+						if (ac.balance > minusMoney) {
 							if (minusMoney % 1000 == 0) {
-								accounts[i].balance -= minusMoney;
+								ac.balance -= minusMoney;
 								isFind = true;
 								System.out.println("출금이 완료되었습니다.");
 							} else {
@@ -147,7 +142,7 @@ public class AccountManager {
 							String allMoney = scan.nextLine();
 
 							if (allMoney.equals("y")) {
-								accounts[i].balance -= accounts[i].balance;
+								ac.balance -= ac.balance;
 								System.out.println("출금이 완료되었습니다.");
 							} else if (allMoney.equals("n")) {
 								return;
@@ -168,12 +163,24 @@ public class AccountManager {
 		if (isFind == false)
 			System.out.println("해당계좌가 존재하지 않습니다.");
 	}
-
+	//계좌 정보 출력
 	public void showAccinfo() {
 		System.out.println("***계좌정보출력***");
-		for (int i = 0; i < index; i++) {
-			accounts[i].showAccinfo();
+		for (Account ac : accounts) {
+			ac.showAccinfo();
 		}
 		System.out.println("전체계좌정보 출력이 완료되었습니다.");
 	}
+	
+	public void deleteAccount() {
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }
