@@ -1,4 +1,4 @@
-package banking4;
+package banking5;
 
 import java.io.EOFException;
 import java.io.FileInputStream;
@@ -221,8 +221,58 @@ public class AccountManager {
 			System.out.println("데이터가 삭제되었습니다.");
 	}
 
+	// 파일 저장
+	public void saveAccountInfo() {
 
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("src/banking5/AccountInfo.obj"));
 
+			for (Account ac : accounts) {
+				out.writeObject(ac);
+			}
+			out.close();
 
+		}
+		catch (Exception e) {
+			 System.out.println("저장완료");
+		}
+
+	}
+
+	// 파일 복원
+	public void readAccountInfo() {
+		ObjectInputStream in = null;
+		try {
+			in = new ObjectInputStream(new FileInputStream(
+					"src/banking5/AccountInfo.obj"));
+
+			while (true) {
+				Account ac = (Account)in.readObject();
+				accounts.add(ac);
+			}
+			
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("[예외]obj파일이 없습니다.");
+		} 
+		catch (EOFException e) {
+			System.out.println("[예외]파일의 끝까지 모두 복원했습니다.");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("복원 중 알수없는 예외발생");
+		} 
+		finally {
+			
+			try {
+				if(!(in==null)) {
+					in.close();
+				}
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 }
