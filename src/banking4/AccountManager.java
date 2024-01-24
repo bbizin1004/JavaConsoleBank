@@ -9,27 +9,18 @@ public class AccountManager {
 	private Account[] accounts;// 해쉬쳇으로 만들면 이것도 필요 없어지는지?
 	private int index;// 해쉬셋 으로 만들면 이것도 필요 없어 지는지?
 
-//<<<<<<< HEAD
-//	public AccountManager() {
-//	
-//	}
-//	
-//	HashSet<Account> set = new HashSet<Account>();
-//	
-//	
-//	public void showMenu() {
-//		System.out.println("-----Menu-----");
-//		System.out.println("1.계좌계설");
-//		System.out.println("2.입금");
-//		System.out.println("3.출금");
-//		System.out.println("4.계좌정보출력");
-//		System.out.println("5.프로그램종료");
-//		System.out.print("선택:");
-//=======
-	
-	
 	public AccountManager() {
 		HashSet<Account> set = new HashSet<Account>(); // 이렇게 하는게 맞는지?? 해쉬셋으로 바꿀때 불필요한 선언은 없는지??
+	}
+
+	public void showMenu() {
+		System.out.println("-----Menu-----");
+		System.out.println("1.계좌계설");
+		System.out.println("2.입금");
+		System.out.println("3.출금");
+		System.out.println("4.계좌정보출력");
+		System.out.println("5.프로그램종료");
+		System.out.print("선택:");
 	}
 
 	public void makeAccount() {
@@ -41,10 +32,10 @@ public class AccountManager {
 		System.out.println("2.신용신뢰계좌");
 
 		int choice = scan.nextInt();
-//<<<<<<< HEAD
-//		scan.nextLine(); // 버퍼 날림
-//=======
-		scan.nextLine(); 
+
+		scan.nextLine(); // 버퍼 날림
+
+		scan.nextLine();
 		System.out.print("계좌번호: ");
 		String accountNum = scan.nextLine();
 
@@ -143,7 +134,7 @@ public class AccountManager {
 							System.out.println("y:금액전체 출금처리 or n:출금요청취소 ");
 							scan.nextLine();
 							String allMoney = scan.nextLine();
-							
+
 							if (allMoney.equals("y")) {
 								accounts[i].balance -= accounts[i].balance;
 								System.out.println("출금이 완료되었습니다.");
