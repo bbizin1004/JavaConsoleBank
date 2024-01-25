@@ -26,7 +26,8 @@ public class AccountManager {
 		System.out.println("3.출금");
 		System.out.println("4.계좌정보출력");
 		System.out.println("5.계좌정보삭제");
-		System.out.println("6.프로그램종료");
+		System.out.println("6.저장옵션");
+		System.out.println("7.프로그램종료");
 		System.out.print("선택:");
 	}
 
