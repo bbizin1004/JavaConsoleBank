@@ -32,7 +32,7 @@ public class BankingSystemMain implements ICustomDefine {
 				account.deleteAccount();
 				break;
 			case SAVE:
-				account.deleteAccount();
+				account.autoSave();
 				break;
 			case EXIT:
 				account.saveAccountInfo();

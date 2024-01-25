@@ -28,10 +28,23 @@ public class AutoSaver extends Thread {
 					if(ac instanceof NormalAccount) {
 						out.write("[보통계좌]");
 					}else if (ac instanceof HighCreditAccount) {
-						out.write("[신용계좌]");
+						out.write("[신용신뢰계좌]");
 					}
+					out.write("계좌번호:");
+					out.write(ac.accountNum);
+					out.write(" ,고객이름:");
+					out.write(ac.name);
+					out.write(" ,잔고:");
+					out.write(ac.balance);
+					out.write(" ,기본이자:");
+//					out.write(ac.interest);
+					out.write(" ,신용등급:");
+//					out.write(ac.grade);
+					
+					out.newLine();
+					
 				}
-				
+				System.out.println("자동저장이 되었습니다.");
 				
 				
 				

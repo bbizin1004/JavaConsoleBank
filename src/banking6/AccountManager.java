@@ -274,5 +274,14 @@ public class AccountManager {
 			}
 		}
 	}
+	
+	public void autoSave() {
+		
+		AutoSaver as = new AutoSaver(accounts);
+		as.setDaemon(true);
+		as.start();
+		
+	}
+	
 
 }
