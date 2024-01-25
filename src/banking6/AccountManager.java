@@ -227,7 +227,7 @@ public class AccountManager {
 	public void saveAccountInfo() {
 
 		try {
-			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("src/banking5/AccountInfo.obj"));
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("src/banking6/AccountInfo.obj"));
 
 			for (Account ac : accounts) {
 				out.writeObject(ac);
@@ -244,7 +244,7 @@ public class AccountManager {
 	public void readAccountInfo() {
 		ObjectInputStream in = null;
 		try {
-			in = new ObjectInputStream(new FileInputStream("src/banking5/AccountInfo.obj"));
+			in = new ObjectInputStream(new FileInputStream("src/banking6/AccountInfo.obj"));
 
 			while (true) {
 				Account ac = (Account) in.readObject();
@@ -259,7 +259,6 @@ public class AccountManager {
 			e.printStackTrace();
 			System.out.println("복원 중 알수없는 예외발생");
 		} finally {
-
 			try {
 				if (!(in == null)) {
 					in.close();
