@@ -51,6 +51,7 @@ public class AccountManager {
 
 		System.out.print("잔고: ");
 		int balance = BankingSystemMain.scan.nextInt();
+		BankingSystemMain.scan.nextLine();
 
 		if (choice == 1) {
 			System.out.print("기본이자%(정수형태로 입력):");
@@ -103,7 +104,7 @@ public class AccountManager {
 		System.out.print("계좌번호: ");
 		String searchNum = BankingSystemMain.scan.nextLine();
 
-		// 확장 for문으로 변경( hashset은 인덱스가 없기때문에)// 일반for문으로는 안되는지??
+		// 확장 for문으로 변경( hashset은 인덱스가 없기때문에)
 		for (Account ac : accounts) {
 			if (searchNum.compareTo(ac.accountNum) == 0) {
 				System.out.print("입금액: ");
@@ -194,6 +195,7 @@ public class AccountManager {
 		System.out.println("***계좌정보출력***");
 		for (Account ac : accounts) {
 			ac.showAccinfo();
+			System.out.println();
 		}
 		System.out.println("전체계좌정보 출력이 완료되었습니다.");
 	}
@@ -232,9 +234,8 @@ public class AccountManager {
 			}
 			out.close();
 
-		}
-		catch (Exception e) {
-			 System.out.println("저장완료");
+		} catch (Exception e) {
+			System.out.println("저장완료");
 		}
 
 	}
@@ -243,45 +244,37 @@ public class AccountManager {
 	public void readAccountInfo() {
 		ObjectInputStream in = null;
 		try {
-			in = new ObjectInputStream(new FileInputStream(
-					"src/banking5/AccountInfo.obj"));
+			in = new ObjectInputStream(new FileInputStream("src/banking5/AccountInfo.obj"));
 
 			while (true) {
-				Account ac = (Account)in.readObject();
+				Account ac = (Account) in.readObject();
 				accounts.add(ac);
 			}
-			
-		}
-		catch (FileNotFoundException e) {
+
+		} catch (FileNotFoundException e) {
 			System.out.println("[예외]obj파일이 없습니다.");
-		} 
-		catch (EOFException e) {
+		} catch (EOFException e) {
 			System.out.println("[예외]파일의 끝까지 모두 복원했습니다.");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("복원 중 알수없는 예외발생");
-		} 
-		finally {
-			
+		} finally {
+
 			try {
-				if(!(in==null)) {
+				if (!(in == null)) {
 					in.close();
 				}
-			} 
-			catch (IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
-	
+
 	public void autoSave() {
-		
 		AutoSaver as = new AutoSaver(accounts);
 		as.setDaemon(true);
 		as.start();
-		
+
 	}
-	
 
 }

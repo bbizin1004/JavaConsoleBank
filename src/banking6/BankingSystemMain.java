@@ -50,6 +50,7 @@ public class BankingSystemMain implements ICustomDefine {
 
 		try {
 			inputMenu = scan.nextInt();
+			scan.nextLine();//버퍼 날림
 			if (!(inputMenu > 0 && inputMenu < 8)) {
 				MenuErrorException ex = new MenuErrorException();
 				throw ex;

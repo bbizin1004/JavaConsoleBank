@@ -1,6 +1,7 @@
 package banking6;
 
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
@@ -19,15 +20,14 @@ public class AutoSaver extends Thread {
 		System.out.println("자동저장을 실행합니다.");
 
 		try {
-			BufferedWriter out = new BufferedWriter(
-					new FileWriter("src/banking6/AutoSaveAccount.txt"));
-			
+			BufferedWriter out = new BufferedWriter(new FileWriter("src/banking6/AutoSaveAccount.txt"));
+
 			while (true) {
-				
-				for(Account ac : accounts) {
-					if(ac instanceof NormalAccount) {
+
+				for (Account ac : accounts) {
+					if (ac instanceof NormalAccount) {
 						out.write("[보통계좌]");
-					}else if (ac instanceof HighCreditAccount) {
+					} else if (ac instanceof HighCreditAccount) {
 						out.write("[신용신뢰계좌]");
 					}
 					out.write("계좌번호:");
@@ -40,13 +40,11 @@ public class AutoSaver extends Thread {
 //					out.write(ac.interest);
 					out.write(" ,신용등급:");
 //					out.write(ac.grade);
-					
+
 					out.newLine();
-					
+
 				}
-				System.out.println("자동저장이 되었습니다.");
-				
-				
+				System.out.println("자동저장 완료.");
 				
 				sleep(5000);
 
@@ -54,8 +52,10 @@ public class AutoSaver extends Thread {
 
 		} catch (InterruptedException e) {
 			System.out.println("자동저장시 오류발생");
+		} catch (FileNotFoundException e) {
+			System.out.println("파일없음");
 		} catch (IOException e) {
-			// TODO: handle exception
+			System.out.println("IO 오류");
 		}
 
 	}
