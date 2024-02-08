@@ -1,4 +1,4 @@
-package chat8;
+package multichat;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

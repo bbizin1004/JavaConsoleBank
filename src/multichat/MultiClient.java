@@ -1,4 +1,4 @@
-package chat8;
+package multichat;
 
 import java.net.Socket;
 import java.util.Scanner;
