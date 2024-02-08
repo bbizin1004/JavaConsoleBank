@@ -30,9 +30,10 @@ public class Receiver extends Thread {
 	@Override
 	public void run() {
 		while (in != null) {
+			
+			
 			try {
-				System.out.println("Thread Receive :" + 
-						URLDecoder.decode(in.readLine(),"UTF-8"));
+				System.out.println("Thread Receiver :" + URLDecoder.decode(in.readLine(), "UTF-8"));
 			}
 			catch (SocketException e) {
 				System.out.println("SocketException");

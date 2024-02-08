@@ -93,7 +93,7 @@ public class MultiServer {
 				} else {
 					/* 메세지를 보낼때 사용되는 부분 */
 					it_out.println("[" + URLEncoder.encode(name,"UTF-8") + 
-							"]" + msg);
+							"]" + URLEncoder.encode(msg,"UTF-8"));
 				}
 
 			} catch (Exception e) {
@@ -153,9 +153,9 @@ public class MultiServer {
 
 			try {
 				// 첫번째 메세지는 대화명이므로 접속을 알린다.
-				name = in.readLine();
+				//name = in.readLine();
 				//디코딩
-				name = URLDecoder.decode(name, "UTF-8");
+				name = URLDecoder.decode(in.readLine(), "UTF-8");
 				sendAllMsg("", name + "님이 입장하셨습니다.");
 				clientMap.put(name, out);
 
@@ -164,9 +164,9 @@ public class MultiServer {
 
 				// 두번째 메세지부터는 "대화내용"
 				while (in != null) {
-					s = in.readLine();
+					//s = in.readLine();
 					//메시지 디코딩
-					s = URLDecoder.decode(s, "UTF-8");
+					s = URLDecoder.decode(in.readLine(),"UTF-8");
 					if (s == null)
 						break;
 					// 서버의 콘솔에는 메세지를 그대로 출력한다.
