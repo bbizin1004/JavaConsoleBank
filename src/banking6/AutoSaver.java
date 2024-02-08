@@ -38,6 +38,7 @@ public class AutoSaver extends Thread {
 					out.write(ac.balance);
 					out.write(" ,기본이자:");
 //					out.write(ac.interest);
+					
 					out.write(" ,신용등급:");
 //					out.write(ac.grade);
 
