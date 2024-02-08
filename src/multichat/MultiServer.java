@@ -5,6 +5,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -67,7 +69,8 @@ public class MultiServer {
 	}
 
 	/*
-	 * 접속된 모든 클라이언트 측으로 서버의 메세지를 Echo 해주는 역활을 수행한다. (이전 단계에서는 보낸 사람에게만 Echo 되었다.)
+	  접속된 모든 클라이언트 측으로 서버의 메세지를 Echo 해주는 역활을 수행한다.
+	  (이전 단계에서는 보낸 사람에게만 Echo 되었다.)
 	 */
 	public void sendAllMsg(String name, String msg) {
 
@@ -81,14 +84,16 @@ public class MultiServer {
 				PrintWriter it_out = (PrintWriter) clientMap.get(it.next());
 
 				/*
-				 * 클라이언트에게 메세지를 전달할때 매개변수로 name이 있는 경우와 없는 경우를 구분해서 전달한다.
+				  클라이언트에게 메세지를 전달할때 매개변수로 name이 있는 경우와 없는 경우를
+				 구분해서 전달한다.
 				 */
 				if (name.equals("")) {
 					/* 입장 혹은 퇴장에서 사용되는 부분 */
-					it_out.println(msg);
+					it_out.println(URLEncoder.encode(msg,"UTF-8"));
 				} else {
 					/* 메세지를 보낼때 사용되는 부분 */
-					it_out.println("[" + name + "]" + msg);
+					it_out.println("[" + URLEncoder.encode(name,"UTF-8") + 
+							"]" + msg);
 				}
 
 			} catch (Exception e) {
@@ -134,7 +139,8 @@ public class MultiServer {
 			this.socket = socket;
 			try {
 				out = new PrintWriter(this.socket.getOutputStream(), true);
-				in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+				in = new BufferedReader(
+						new InputStreamReader(this.socket.getInputStream()));
 			} catch (Exception e) {
 				System.out.println("예외:" + e);
 			}
@@ -148,6 +154,8 @@ public class MultiServer {
 			try {
 				// 첫번째 메세지는 대화명이므로 접속을 알린다.
 				name = in.readLine();
+				//디코딩
+				name = URLDecoder.decode(name, "UTF-8");
 				sendAllMsg("", name + "님이 입장하셨습니다.");
 				clientMap.put(name, out);
 
@@ -157,6 +165,8 @@ public class MultiServer {
 				// 두번째 메세지부터는 "대화내용"
 				while (in != null) {
 					s = in.readLine();
+					//메시지 디코딩
+					s = URLDecoder.decode(s, "UTF-8");
 					if (s == null)
 						break;
 					// 서버의 콘솔에는 메세지를 그대로 출력한다.
