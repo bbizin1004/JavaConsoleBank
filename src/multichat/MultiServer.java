@@ -121,7 +121,8 @@ public class MultiServer {
 				   대화명이 일치하는지 확인한다.*/
 				if (clientName.equals(receiveName)) {
 					//일치하면 한 사람에게만 귓속말을 보낸다.
-					it_out.println("[귓속말]" + name  + ":" + msg);
+					it_out.println("[귓속말]" + URLEncoder.encode(name,"UTF-8")  + ":" 
+							+ URLEncoder.encode(msg,"UTF-8"));
 				}
 
 			} catch (Exception e) {
@@ -182,20 +183,20 @@ public class MultiServer {
 						 */
 						String[] strArr = s.split(" ");
 						/*
-						 * 문자열을 스페이스로 분리하면 0번 인덱스는 명령어, 1번 인덱스는 수신자 대화명이 되고 2번 인덱스부터 끝까지는 대화내용이 되므로 아래와
-						 * 같이 문자열 처리를 해야한다.
+						 문자열을 스페이스로 분리하면 0번 인덱스는 명령어, 1번 인덱스는 수신자 대화명이 되고
+						 2번 인덱스부터 끝까지는 대화내용이 되므로 아래와 같이 문자열 처리를 해야한다.
 						 */
 						String msgContent = "";
-						for (int i = 2; i < strArr.length; i++) {
-							msgContent += strArr[i] + " ";
-						}
+						for (int i = 2; i < strArr.length; i++) {msgContent += strArr[i] + " ";}
 						/*
-						 * 명령어가 /to가 맞는지 확인한다. 명령어에 대한 오타가 있을수도 있고, 다른 명령어 일수도 있기 때문이다.
+						 * 명령어가 /to가 맞는지 확인한다. 명령어에 대한 오타가 있을수도 있고, 
+						 * 다른 명령어 일수도 있기 때문이다.
 						 */
 						if (strArr[0].equals("/to")) {
 							// 귓속말을 보낸다.
 							/*
-							 * 기존의 메서드를 오버로딩해서 추가 정의한다. 매개변수는 발신대화명, 메세지, 수신대화명 형태로 작성한다.
+							 기존의 메서드를 오버로딩해서 추가 정의한다. 매개변수는 발신대화명,
+							 메세지, 수신대화명 형태로 작성한다.
 							 */
 							sendAllMsg(name,msgContent , strArr[1]);
 						}
