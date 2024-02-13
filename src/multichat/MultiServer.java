@@ -151,7 +151,10 @@ public class MultiServer {
 		public void run() {
 			String name = "";
 			String s = "";
-
+			
+			InsertProcCall insert = new InsertProcCall();
+			
+			
 			try {
 				// 첫번째 메세지는 대화명이므로 접속을 알린다.
 				//name = in.readLine();
@@ -172,6 +175,14 @@ public class MultiServer {
 						break;
 					// 서버의 콘솔에는 메세지를 그대로 출력한다.
 					System.out.println(name + "==>" + s);
+					
+					
+					
+					
+					
+					//DB에 저장하는 코딩
+					insert.dbExecute(); 
+					
 
 					/*
 					 * 귓속말형식: /to 수신자명 대화내용 블라 블라
@@ -204,6 +215,9 @@ public class MultiServer {
 					} else {
 						// 슬러시가 없으면 일반 대화내용
 						sendAllMsg(name, s);
+						
+						//DB에 저장하는 코딩
+						insert.dbExecute(); 
 					}
 
 				}
