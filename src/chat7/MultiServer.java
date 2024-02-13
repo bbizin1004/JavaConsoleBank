@@ -149,6 +149,7 @@ public class MultiServer {
 				// 첫번째 메세지는 대화명이므로 접속을 알린다.
 				name = in.readLine();
 				sendAllMsg("", name + "님이 입장하셨습니다.");
+				// 해쉬맵에 키를 name으로 출력스트림 객체를 저장.
 				clientMap.put(name, out);
 
 				System.out.println(name + "접속");

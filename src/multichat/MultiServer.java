@@ -7,12 +7,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class MultiServer {
+public class MultiServer extends MyConnection {
 
 	// 멤버변수
 	static ServerSocket serverSocket = null;
@@ -23,6 +25,8 @@ public class MultiServer {
 
 	// 생성자
 	public MultiServer() {
+		//DB연동을 위한 접속 코딩
+		super("study","1234");
 		/* 클라이언트의 이름과 접속시 생성한 출력스트림을 저장할 HashMap 인스턴스 생성 */
 		clientMap = new HashMap<String, PrintWriter>();
 		/*
@@ -61,9 +65,37 @@ public class MultiServer {
 			}
 		}
 	}
+	
+	
+	//DB연동을 위한 코딩
+	@Override
+	public void dbExecute() {
+		try {
+			csmt = con.prepareCall("{call chat_talking(?,?,?)}");
+			//csmt.setString(1, );  //어떻게 대화명을 가져올지 고민
+			//csmt.setString(2, );  //어떻게 대화내용을 가져올지 고민
+			csmt.registerOutParameter(3, Types.NUMERIC);
+			csmt.execute();
+			int affected = csmt.getInt(3);
+			if (affected == 0)
+				System.out.println("오류발생:입력실패");
+			else
+				System.out.println(affected + "행 입력성공");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			dbClose();
+		}
+	}
+	
+	
+	
+	
 
 	/* 인스턴스 생성 후 초기화 메서드를 호출한다. */
 	public static void main(String[] args) {
+		
 		MultiServer ms = new MultiServer();
 		ms.init();
 	}
@@ -110,7 +142,7 @@ public class MultiServer {
 		while (it.hasNext()) {
 			try {
 				/*
-				 * GashMap에는 Key로 대화명, Value로 PrintWriter
+				 * HashMap에는 Key로 대화명, Value로 PrintWriter
 				 *  인스턴스가 저장되어 있다.
 				 */
 				String clientName = it.next();
@@ -152,7 +184,6 @@ public class MultiServer {
 			String name = "";
 			String s = "";
 			
-			InsertProcCall insert = new InsertProcCall();
 			
 			
 			try {
@@ -160,7 +191,17 @@ public class MultiServer {
 				//name = in.readLine();
 				//디코딩
 				name = URLDecoder.decode(in.readLine(), "UTF-8");
-				sendAllMsg("", name + "님이 입장하셨습니다.");
+				
+				Iterator<String> user = clientMap.keySet().iterator();
+				if (clientMap.containsKey(name)) {
+				System.out.println("중복된 아이디 입니다. 다시 접속해주세요.");
+				socket.close();
+				user.remove();
+				}
+				
+				else {
+					sendAllMsg("", name + "님이 입장하셨습니다.");
+				}
 				clientMap.put(name, out);
 
 				System.out.println(name + "접속");
@@ -177,11 +218,19 @@ public class MultiServer {
 					System.out.println(name + "==>" + s);
 					
 					
+					/*  강퇴기능 구현중!!!!
+					if(!roomN.get(title).keySet().contains(name)) {
+						waitUser.put(name, out);
+						out.println("퇴장.");
+						th = 1;
+						break;
+					}
+					else {
 					
 					
+					*/
 					
-					//DB에 저장하는 코딩
-					insert.dbExecute(); 
+					
 					
 
 					/*
@@ -217,7 +266,7 @@ public class MultiServer {
 						sendAllMsg(name, s);
 						
 						//DB에 저장하는 코딩
-						insert.dbExecute(); 
+						//insert.dbExecute(); 
 					}
 
 				}
